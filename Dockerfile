@@ -16,6 +16,9 @@ COPY . .
 # Disable telemetry during the build.
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Install next globally
+RUN npm install -g next
+
 RUN npm run build
 
 

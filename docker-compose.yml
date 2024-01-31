@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  nginx:
+    container_name: "nginx_server"
+    image: shourovrahman/nextjs-app:latest 
+    build:
+      context: .
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+    networks:
+      - app
+    restart: always
+
+  letsencrypt:
+    container_name: "certbot"
+    image: certbot/certbot
+    command: certonly --webroot -w /usr/share/nginx/html -d shourov.xyz -d www.shourov.xyz --agree-tos --email shourovju43@gmail.com --rsa-key-size 4096 --preferred-challenges http
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro  # Adjust the path based on your directory structure
+    depends_on:
+      - nginx
+    entrypoint: ""
+    environment:
+      - TERM=xterm
+
+networks:
+  app:
+    driver: bridge

@@ -14,19 +14,19 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and Push Docker Image
-        run: docker-compose -f docker-compose.yml build
+        run: docker compose -f docker-compose.yml build
         # Push the built image to Docker Hub
         # Make sure your docker-compose.yml has the image name specified
         # e.g., image: shourovrahman/nextjs-app:latest
-      - run: docker-compose -f docker-compose.yml push   
+      - run: docker compose -f docker-compose.yml push   
 
   deploy: 
     needs: build
     runs-on: self-hosted    
     steps:
       - name: Pull image from Docker Hub
-        run: docker-compose -f docker-compose.yml pull
+        run: docker compose -f docker-compose.yml pull
       - name: Delete Old Container
-        run: docker-compose -f docker-compose.yml down
+        run: docker compose -f docker-compose.yml down
       - name: Run Docker Compose
-        run: docker-compose -f docker-compose.yml up -d
+        run: docker compose -f docker-compose.yml up -d

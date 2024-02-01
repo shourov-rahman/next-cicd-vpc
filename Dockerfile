@@ -17,7 +17,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Install next globally
-RUN npm install -g next
+# RUN npm install -g next
+Run npm install
 
 RUN npm run build
 

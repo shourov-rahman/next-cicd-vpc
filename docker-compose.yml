@@ -10,6 +10,7 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - .:/app
       - /etc/letsencrypt:/etc/letsencrypt
     networks:
       - app
@@ -17,7 +18,7 @@ services:
 
   letsencrypt:
     container_name: "certbot"
-    image: certbot/certbot
+    image: certbot/certbot:latest
     command: certonly --webroot -w /usr/share/nginx/html -d shourov.xyz -d www.shourov.xyz --agree-tos --email shourovju43@gmail.com --rsa-key-size 4096 --preferred-challenges http
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
